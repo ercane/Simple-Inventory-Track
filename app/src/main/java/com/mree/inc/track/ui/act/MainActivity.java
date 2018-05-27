@@ -1,17 +1,32 @@
 package com.mree.inc.track.ui.act;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.mree.inc.track.R;
 import com.mree.inc.track.db.AppDatabase;
 import com.mree.inc.track.db.persist.Product;
+import com.mree.inc.track.ui.adapter.ProductAdapter;
 import com.mree.inc.track.util.IconUtils;
 import com.mree.inc.track.util.Utils;
 import com.nightonke.boommenu.BoomButtons.HamButton;
@@ -20,6 +35,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.obsez.android.lib.filechooser.ChooserDialog;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
+import net.steamcrafted.materialiconlib.MaterialMenuInflater;
 
 import java.io.File;
 import java.util.List;
@@ -29,12 +45,20 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String BARCODE_PARAM = "barcode_param";
+    private static final int CAMERA_PERMISSION_REQUEST = 2525;
+
     @BindView(R.id.headerLayout)
     LinearLayout headerLayout;
     @BindView(R.id.listview)
     ListView listview;
     @BindView(R.id.boomMenu)
     BoomMenuButton boomMenu;
+    public static Handler barcodeHandler;
+    @BindView(R.id.etSearch)
+    EditText etSearch;
+
+    private ProductAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +72,75 @@ public class MainActivity extends AppCompatActivity {
         if (list.isEmpty()) {
             showTapTarget();
         }
+
+        barcodeHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                Bundle data = msg.getData();
+                String barcode = data.getString(BARCODE_PARAM);
+                Toast.makeText(getApplicationContext(), barcode, Toast.LENGTH_LONG).show();
+                if (etSearch != null) {
+                    etSearch.setText(barcode);
+                    etSearch.setSelection(barcode.length());
+                }
+            }
+        };
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!TextUtils.isEmpty(etSearch.getText()) && adapter != null)
+                    adapter.getFilter().filter(etSearch.getText());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MaterialMenuInflater.with(this).inflate(R.menu.search_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+            case R.id.action_search:
+                if (Utils.checkPermission(Manifest.permission.CAMERA)) {
+                    Intent i = new Intent(this, QRScannerActivity.class);
+                    startActivity(i);
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.CAMERA},
+                            CAMERA_PERMISSION_REQUEST);
+                }
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == CAMERA_PERMISSION_REQUEST) {
+            if (Utils.checkPermission(Manifest.permission.CAMERA)) {
+                Intent i = new Intent(this, QRScannerActivity.class);
+                startActivity(i);
+            }
+        }
+
     }
 
     private void showTapTarget() {

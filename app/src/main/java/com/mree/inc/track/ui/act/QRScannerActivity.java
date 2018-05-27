@@ -2,6 +2,7 @@ package com.mree.inc.track.ui.act;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -113,7 +114,12 @@ public class QRScannerActivity extends AppCompatActivity implements DecoratedBar
     }
 
     private void sendResult(String text) {
-
+        Bundle data = new Bundle();
+        data.putString(MainActivity.BARCODE_PARAM, text);
+        Message msg = new Message();
+        msg.setData(data);
+        if (MainActivity.barcodeHandler != null)
+            MainActivity.barcodeHandler.sendMessage(msg);
         finish();
     }
 

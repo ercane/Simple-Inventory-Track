@@ -15,4 +15,5 @@
     <string name="title_choose_file">Dosyalar</string>
     <string name="msg_empty_product">Ürün Yok</string>
     <string name="msg_empty_product_msg">Kayıtlı ürün yok eklemek için tıklayınız.</string>
+    <string name="msg_search">Ara</string>
 </resources>
