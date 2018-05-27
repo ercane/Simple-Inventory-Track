@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Simple Inventory Track</string>
+    <string name="header_number">#</string>
+    <string name="header_name">İsim</string>
+    <string name="header_code">Ürün Kodu</string>
+    <string name="header_count">Adet</string>
+    <string name="header_source">Kaynak</string>
+    <string name="copy_msg">copied</string>
+    <string name="msg_title_add_product">Ürün Ekle</string>
+    <string name="msg_add_product">Tek ürün ekle</string>
+    <string name="msg_title_add_csv">Csv Ekle</string>
+    <string name="msg_add_csv">Csv den ürün yüklemek için tıklayınız</string>
+    <string name="msg_title_add_excel">Excel Ekle</string>
+    <string name="msg_add_excel">Excel dosyası eklemek için tıklayınız</string>
+    <string name="title_choose_file">Dosyalar</string>
+    <string name="msg_empty_product">Ürün Yok</string>
+    <string name="msg_empty_product_msg">Kayıtlı ürün yok eklemek için tıklayınız.</string>
+</resources>

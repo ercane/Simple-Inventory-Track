@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context=".ui.act.MainActivity">
+    <LinearLayout android:id="@+id/headerLayout"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@android:color/black" android:orientation="horizontal"
+                  android:paddingBottom="8dp" android:paddingTop="8dp">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1.2"
+                  android:text="@string/header_number"
+                  android:textAlignment="center"
+                  android:textColor="@android:color/white"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:text="@string/header_code"
+                  android:textAlignment="center"
+                  android:textColor="@android:color/white"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:text="@string/header_name"
+                  android:textAlignment="center"
+                  android:textColor="@android:color/white"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:text="@string/header_count"
+                  android:textAlignment="center"
+                  android:textColor="@android:color/white"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:text="@string/header_source"
+                  android:textAlignment="center"
+                  android:textColor="@android:color/white"/>
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerLayout">
+
+    </ListView>
+
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/boomMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        app:bmb_buttonEnum="ham"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
+        app:bmb_normalColor="@color/colorPrimary"
+        app:bmb_piecePlaceEnum="piecePlace_ham_3"
+    />
+</RelativeLayout>
