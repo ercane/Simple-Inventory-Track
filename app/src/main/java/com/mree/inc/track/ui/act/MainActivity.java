@@ -11,13 +11,17 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -74,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         prepareBoomMenu();
-
+        listview.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listview.setMultiChoiceModeListener(getMultiChoiceListener());
         list = AppDatabase.getDatabase(this).productDao().getAllProduct();
 
         if (list.isEmpty()) {
@@ -136,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MaterialMenuInflater.with(this).inflate(R.menu.search_menu, menu);
+        Drawable icon = IconUtils.getActionBarIcon(MaterialDrawableBuilder.IconValue
+                .BARCODE_SCAN, Color.WHITE);
+        menu.getItem(0).setIcon(icon);
         return true;
     }
 
@@ -168,6 +176,96 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private AbsListView.MultiChoiceModeListener getMultiChoiceListener() {
+        return new AbsListView.MultiChoiceModeListener() {
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean
+                    checked) {
+                final int checkedCount = listview.getCheckedItemCount();
+                mode.setTitle(checkedCount + " Seçili");
+                adapter.toggleSelection(position);
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MaterialMenuInflater.with(MainActivity.this).inflate(R.menu.context_product, menu);
+                Drawable selectIcon = IconUtils.getActionBarIcon(MaterialDrawableBuilder
+                        .IconValue.SELECT_ALL, Color.WHITE);
+                Drawable deleteIcon = IconUtils.getActionBarIcon(MaterialDrawableBuilder
+                        .IconValue.DELETE, Color.WHITE);
+                menu.getItem(0).setIcon(selectIcon);
+                menu.getItem(1).setIcon(deleteIcon);
+
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+                SparseBooleanArray selected;
+                switch (item.getItemId()) {
+                    case R.id.action_select_all:
+                        adapter.removeSelection();
+                        listview.clearChoices();
+                        for (int i = 0; i < adapter.getList().size(); i++) {
+                            listview.setItemChecked(i, true);
+                        }
+                        break;
+                    case R.id.action_delete:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Ürünleri Sil");
+                        builder.setMessage("Seçili ürünleri silmek istediğinize emin misiniz?");
+                        builder.setCancelable(true);
+
+                        builder.setPositiveButton(
+                                "Yes",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        SparseBooleanArray selected = adapter
+                                                .getSelectedIds();
+                                        // Captures all selected ids with a loop
+                                        for (int i = (selected.size() - 1); i >= 0; i--) {
+                                            if (selected.valueAt(i)) {
+                                                Product acc = adapter.getItem
+                                                        (selected.keyAt(i));
+                                                if (acc != null) {
+                                                    TrackApp.getDatabase().productDao().delete
+                                                            (acc.id);
+                                                    adapter.remove(acc);
+                                                }
+                                            }
+                                        }
+                                        mode.finish();
+                                    }
+                                });
+
+                        builder.setNegativeButton(
+                                "No",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+                                        mode.finish();
+                                    }
+                                });
+
+                        AlertDialog alert11 = builder.create();
+                        alert11.show();
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                adapter.removeSelection();
+            }
+        };
     }
 
     private void showTapTarget() {

@@ -1,11 +1,13 @@
 package com.mree.inc.track.ui.dialog;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.mree.inc.track.R;
 import com.mree.inc.track.db.persist.Product;
+import com.mree.inc.track.util.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +30,7 @@ public class ProductOptionsDialog extends BaseDialog {
     @Override
     protected void initActions() {
         ButterKnife.bind(this, mainView);
+
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,6 +51,8 @@ public class ProductOptionsDialog extends BaseDialog {
                 deleteProduct();
             }
         });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color
+                .TRANSPARENT));
     }
 
     private void viewProduct() {
@@ -63,6 +68,7 @@ public class ProductOptionsDialog extends BaseDialog {
     }
 
     private void deleteProduct() {
+        Utils.startDeleteDialog(context, product);
     }
 
 

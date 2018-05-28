@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.mree.inc.track.R;
 import com.mree.inc.track.TrackApp;
 import com.mree.inc.track.db.persist.Product;
+import com.mree.inc.track.ui.dialog.ProductDeleteDialog;
 import com.mree.inc.track.ui.dialog.ProductEditDialog;
 import com.mree.inc.track.ui.dialog.ProductViewDialog;
 
@@ -306,7 +307,8 @@ public class Utils {
     }
 
     public static void startDeleteDialog(Context context, Product product) {
-
+        ProductDeleteDialog dialog = new ProductDeleteDialog(context, product);
+        dialog.show();
     }
 
 }

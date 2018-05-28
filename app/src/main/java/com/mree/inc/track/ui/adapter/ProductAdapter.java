@@ -1,9 +1,9 @@
 package com.mree.inc.track.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,6 @@ import com.mree.inc.track.R;
 import com.mree.inc.track.db.persist.Product;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,28 +38,16 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
     TextView tvSource;
     private SparseBooleanArray mSelectedItemsIds;
     private List<Product> list;
-    private List<Product> filteredLists;
+    private List<Product> firstList = new ArrayList<>();
 
     public ProductAdapter(@NonNull Context context, @NonNull List<Product> list) {
-        super(context, R.layout.list_product_item);
+        super(context, R.layout.list_product_item, list);
         this.context = context;
         this.list = list;
+        firstList.addAll(list);
         mSelectedItemsIds = new SparseBooleanArray();
-        addAll(list);
     }
 
-
-    @Override
-    public void add(Product object) {
-        super.add(object);
-        list.add(object);
-    }
-
-    @Override
-    public void addAll(Collection<? extends Product> collection) {
-        super.addAll(collection);
-        list.addAll(collection);
-    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -79,6 +66,11 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
         tvStock.setText(item.getStock());
         tvSource.setText(item.getSource());
 
+        if (mSelectedItemsIds.get(position)) {
+            row.setBackgroundResource(R.drawable.adapter_selected_bckgrnd);
+        } else {
+            row.setBackgroundColor(Color.TRANSPARENT);
+        }
 
         return row;
     }
@@ -120,10 +112,9 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                ProductAdapter.this.clear();
-                filteredLists = (ArrayList<Product>) results.values;
-                ProductAdapter.this.addAll(filteredLists);
-                ProductAdapter.this.notifyDataSetChanged();
+                clear();
+                addAll((ArrayList<Product>) results.values);
+                notifyDataSetChanged();
             }
 
 
@@ -131,28 +122,26 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults results = new FilterResults();
-                ArrayList<Product> FilteredArrayNames = new ArrayList<Product>();
+                ArrayList<Product> filteredList = new ArrayList<Product>();
 
                 // perform your search here using the searchConstraint String.
                 if (TextUtils.isEmpty(constraint)) {
-                    results.count = list.size();
-                    results.values = list;
+                    filteredList.addAll(firstList);
                     return results;
-                }
-                constraint = constraint.toString().toLowerCase();
-                for (int i = 0; i < list.size(); i++) {
-                    String dataNames = list.get(i).toString();
-                    if (!TextUtils.isEmpty(dataNames) && dataNames.toLowerCase().contains
-                            (constraint.toString())) {
-                        FilteredArrayNames.add(list.get(i));
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    for (int i = 0; i < list.size(); i++) {
+                        String dataNames = list.get(i).toString();
+                        if (!TextUtils.isEmpty(dataNames) && dataNames.toLowerCase().contains
+                                (constraint.toString())) {
+                            filteredList.add(list.get(i));
+                        }
                     }
                 }
 
 
-                results.count = FilteredArrayNames.size();
-                results.values = FilteredArrayNames;
-                Log.e("VALUES", results.values.toString());
-
+                results.count = filteredList.size();
+                results.values = filteredList;
                 return results;
             }
         };
