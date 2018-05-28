@@ -20,14 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp">
-        <EditText
-            android:id="@+id/tvName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/msg_name"
-            android:tag="@string/text_bold"
-            android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/msg_name"
+                android:tag="@string/text_bold"
+                android:textColor="@android:color/black"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
     <LinearLayout
@@ -43,15 +43,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp">
-        <EditText
-            android:id="@+id/tvBarcode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/msg_barcode"
-            android:inputType="numberDecimal"
-            android:tag="@string/text_bold"
-            android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/tvBarcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/msg_barcode"
+                android:inputType="numberDecimal"
+                android:tag="@string/text_bold"
+                android:textColor="@android:color/black"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -67,14 +67,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp">
-        <EditText
-            android:id="@+id/tvProductCode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/msg_product_code"
-            android:tag="@string/text_bold"
-            android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/tvProductCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/msg_product_code"
+                android:tag="@string/text_bold"
+                android:textColor="@android:color/black"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -92,15 +92,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp">
-        <EditText
-            android:id="@+id/tvStock"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/msg_stock"
-            android:inputType="numberDecimal"
-            android:tag="@string/text_bold"
-            android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/tvStock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/msg_stock"
+                android:inputType="numberDecimal"
+                android:tag="@string/text_bold"
+                android:textColor="@android:color/black"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -116,14 +116,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp">
-        <EditText
-            android:id="@+id/tvSource"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/msg_source"
-            android:tag="@string/text_bold"
-            android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/tvSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/msg_source"
+                android:tag="@string/text_bold"
+                android:textColor="@android:color/black"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
