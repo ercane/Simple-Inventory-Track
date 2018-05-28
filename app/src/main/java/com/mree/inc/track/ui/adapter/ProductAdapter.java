@@ -46,6 +46,7 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
         this.context = context;
         this.list = list;
         mSelectedItemsIds = new SparseBooleanArray();
+        addAll(list);
     }
 
 
@@ -133,7 +134,11 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
                 ArrayList<Product> FilteredArrayNames = new ArrayList<Product>();
 
                 // perform your search here using the searchConstraint String.
-
+                if (TextUtils.isEmpty(constraint)) {
+                    results.count = list.size();
+                    results.values = list;
+                    return results;
+                }
                 constraint = constraint.toString().toLowerCase();
                 for (int i = 0; i < list.size(); i++) {
                     String dataNames = list.get(i).toString();
@@ -142,6 +147,7 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
                         FilteredArrayNames.add(list.get(i));
                     }
                 }
+
 
                 results.count = FilteredArrayNames.size();
                 results.values = FilteredArrayNames;
