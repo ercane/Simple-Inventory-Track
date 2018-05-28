@@ -61,4 +61,14 @@ public class Product {
     public void setSource(String source) {
         this.source = source;
     }
+
+    @Override
+    public String toString() {
+        try {
+            return id + "\t" + barcode + "\t" + productCode + "\t" + name + "\t" + stock + "\t" +
+                    source;
+        } catch (Exception e) {
+            return super.toString();
+        }
+    }
 }

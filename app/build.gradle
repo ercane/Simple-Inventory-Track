@@ -22,6 +22,10 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+
     compile 'com.obsez.android.lib.filechooser:filechooser:1.1.9'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.jakewharton:butterknife:8.8.1'
@@ -29,6 +33,8 @@ dependencies {
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'net.steamcrafted:materialiconlib:1.1.4'
     implementation 'com.nightonke:boommenu:2.1.1'
+
+
     /*DATABASE*/
     implementation 'android.arch.lifecycle:extensions:1.0.0-rc1'
     implementation 'android.arch.persistence.room:runtime:1.0.0-rc1'

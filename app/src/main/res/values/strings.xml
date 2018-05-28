@@ -16,4 +16,17 @@
     <string name="msg_empty_product">Ürün Yok</string>
     <string name="msg_empty_product_msg">Kayıtlı ürün yok eklemek için tıklayınız.</string>
     <string name="msg_search">Ara</string>
+    <string name="text_bold">bold</string>
+    <string name="msg_settings_product_view">Görüntüle</string>
+    <string name="msg_settings_product_edit">Düzenle</string>
+    <string name="msg_settings_product_delete">Sil</string>
+    <string name="msg_product_code">Ürün Kodu:</string>
+    <string name="msg_barcode">Barkod</string>
+    <string name="msg_name">İsim</string>
+    <string name="msg_stock">Stok</string>
+    <string name="msg_source">Temin edildiği yer</string>
+    <string name="msg_edit">Düzenle</string>
+    <string name="msg_delete">Sil</string>
+    <string name="msg_save">Kaydet</string>
+    <string name="error_required_field">Bu alan gereklidir!</string>
 </resources>

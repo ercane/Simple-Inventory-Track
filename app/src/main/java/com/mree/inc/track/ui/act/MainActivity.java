@@ -1,6 +1,7 @@
 package com.mree.inc.track.ui.act;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -16,6 +17,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,10 +27,13 @@ import android.widget.Toast;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.mree.inc.track.R;
+import com.mree.inc.track.TrackApp;
 import com.mree.inc.track.db.AppDatabase;
 import com.mree.inc.track.db.persist.Product;
 import com.mree.inc.track.ui.adapter.ProductAdapter;
+import com.mree.inc.track.ui.dialog.ProductOptionsDialog;
 import com.mree.inc.track.util.IconUtils;
+import com.mree.inc.track.util.ReadUtils;
 import com.mree.inc.track.util.Utils;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -46,19 +52,21 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     public static final String BARCODE_PARAM = "barcode_param";
+    public static final String CSV_REGEX = ".*\\.(csv)";
+    public static final String EXCEL_REGEX = ".*\\.(xls|xlsx)";
     private static final int CAMERA_PERMISSION_REQUEST = 2525;
-
+    public static Handler barcodeHandler;
     @BindView(R.id.headerLayout)
     LinearLayout headerLayout;
     @BindView(R.id.listview)
     ListView listview;
     @BindView(R.id.boomMenu)
     BoomMenuButton boomMenu;
-    public static Handler barcodeHandler;
     @BindView(R.id.etSearch)
     EditText etSearch;
 
     private ProductAdapter adapter;
+    private List<Product> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         prepareBoomMenu();
 
-        List<Product> list = AppDatabase.getDatabase(this).productDao().getAllProduct();
+        list = AppDatabase.getDatabase(this).productDao().getAllProduct();
 
         if (list.isEmpty()) {
             showTapTarget();
@@ -102,6 +110,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        adapter = new ProductAdapter(this, list);
+        listview.setAdapter(adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Product product = adapter.getItem(i);
+                ProductOptionsDialog dialog = new ProductOptionsDialog(MainActivity.this, product);
+                dialog.show();
+                dialog.setDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        adapter.clear();
+                        list = TrackApp.getDatabase().productDao().getAllProduct();
+                        adapter.addAll(list);
+                    }
+                });
             }
         });
     }
@@ -189,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                         .listener(new OnBMClickListener() {
                             @Override
                             public void onBoomButtonClick(int index) {
-
+                                Utils.startEditDialog(MainActivity.this, null);
                             }
                         })
                         .rippleEffect(true)
@@ -204,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                         .listener(new OnBMClickListener() {
                             @Override
                             public void onBoomButtonClick(int index) {
-                                chooseFile(".*\\.(csv)");
+                                chooseCsvFile();
                             }
                         })
                         .rippleEffect(true)
@@ -219,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                         .listener(new OnBMClickListener() {
                             @Override
                             public void onBoomButtonClick(int index) {
-                                chooseFile(".*\\.(xls|xlsx)");
+                                chooseExcelFile();
                             }
                         })
                         .rippleEffect(true)
@@ -230,9 +257,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void chooseFile(String regex) {
+    private void chooseCsvFile() {
         new ChooserDialog().with(this)
-                .withFilterRegex(false, true, regex)
+                .withFilterRegex(false, true, CSV_REGEX)
                 .withStartFile("/")
                 .withResources(R.string.title_choose_file,
                         R.string.title_choose, R.string
@@ -240,7 +267,36 @@ public class MainActivity extends AppCompatActivity {
                 .withChosenListener(new ChooserDialog.Result() {
                     @Override
                     public void onChoosePath(String path, File pathFile) {
+                        List<Product> products = ReadUtils.readCsvFile(path);
+                        if (adapter != null) {
+                            adapter.addAll(products);
+                        }
 
+                        for (Product p : products)
+                            TrackApp.getDatabase().productDao().addProduct(p);
+
+                    }
+                })
+                .build()
+                .show();
+    }
+
+    private void chooseExcelFile() {
+        new ChooserDialog().with(this)
+                .withFilterRegex(false, true, EXCEL_REGEX)
+                .withStartFile("/")
+                .withResources(R.string.title_choose_file,
+                        R.string.title_choose, R.string
+                                .dialog_cancel)
+                .withChosenListener(new ChooserDialog.Result() {
+                    @Override
+                    public void onChoosePath(String path, File pathFile) {
+                        List<Product> products = ReadUtils.readExcelFile(path);
+                        if (adapter != null) {
+                            adapter.addAll(products);
+                        }
+                        for (Product p : products)
+                            TrackApp.getDatabase().productDao().addProduct(p);
                     }
                 })
                 .build()

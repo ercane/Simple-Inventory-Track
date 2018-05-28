@@ -27,6 +27,9 @@ import android.widget.TextView;
 
 import com.mree.inc.track.R;
 import com.mree.inc.track.TrackApp;
+import com.mree.inc.track.db.persist.Product;
+import com.mree.inc.track.ui.dialog.ProductEditDialog;
+import com.mree.inc.track.ui.dialog.ProductViewDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -290,6 +293,20 @@ public class Utils {
                 TimeUnit.MILLISECONDS.toMinutes(ms) -
                         TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(ms)));
         return str;
+    }
+
+    public static void startViewDialog(Context context, Product product) {
+        ProductViewDialog dialog = new ProductViewDialog(context, product);
+        dialog.show();
+    }
+
+    public static void startEditDialog(Context context, Product product) {
+        ProductEditDialog dialog = new ProductEditDialog(context, product);
+        dialog.show();
+    }
+
+    public static void startDeleteDialog(Context context, Product product) {
+
     }
 
 }
