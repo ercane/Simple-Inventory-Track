@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Simple Inventory Track</string>
+    <string name="app_name">YoyoMoyo\nStok</string>
     <string name="header_number">#</string>
     <string name="header_name">İsim</string>
     <string name="header_code">Ürün Kodu</string>

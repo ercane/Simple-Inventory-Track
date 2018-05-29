@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setTitle(R.string.app_name);
+
         prepareBoomMenu();
         listview.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listview.setMultiChoiceModeListener(getMultiChoiceListener());
