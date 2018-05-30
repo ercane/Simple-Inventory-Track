@@ -85,6 +85,15 @@ public class ReadUtils {
         }
     }
 
+    private static String getStrAsISO(String str) {
+        try {
+            byte[] array = str.getBytes("ISO-8859-1");
+            return new String(array, "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            return str;
+        }
+    }
+
 //    public static List<Product> readXLSFile(String path) throws IOException {
 //        List<Product> list = new ArrayList<>();
 //        InputStream ExcelFileToRead = new FileInputStream(path);
@@ -205,13 +214,14 @@ public class ReadUtils {
         try {
             WorkbookSettings ws = new WorkbookSettings();
             ws.setGCDisabled(true);
-
-            workbook = Workbook.getWorkbook(new File(path), ws);
+            ws.setEncoding("Cp1252");
+            FileInputStream fis = new FileInputStream(new File(path));
+            workbook = Workbook.getWorkbook(fis, ws);
             Sheet sheet = workbook.getSheet(0);
 
             int rowCount = sheet.getRows();
             String[][] result = new String[rowCount][];
-            for (int i = 0; i < rowCount; i++) {
+            for (int i = 1; i < rowCount; i++) {
                 Product product = new Product();
 
                 Cell[] row = sheet.getRow(i);
@@ -220,22 +230,23 @@ public class ReadUtils {
                     result[i][j] = row[j].getContents();
                     switch (j) {
                         case 0:
-                            product.setBarcode(row[j].getContents());
+                            product.setBarcode(getStrAsISO(row[j].getContents()));
                             break;
                         case 1:
-                            product.setProductCode(row[j].getContents());
+                            product.setProductCode(getStrAsISO(row[j].getContents()));
                             break;
                         case 2:
-                            product.setName(row[j].getContents());
+                            product.setName(getStrAsISO(row[j].getContents()));
                             break;
                         case 3:
-                            product.setStock(row[j].getContents());
+                            product.setStock(getStrAsISO(row[j].getContents()));
                             break;
                         case 4:
-                            product.setSource(row[j].getContents());
+                            product.setSource(getStrAsISO(row[j].getContents()));
                             break;
                     }
                 }
+                list.add(product);
             }
 
 
