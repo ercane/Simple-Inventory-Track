@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String BARCODE_PARAM = "barcode_param";
     public static final String CSV_REGEX = ".*\\.(csv)";
-    public static final String EXCEL_REGEX = ".*\\.(xls|xlsx)";
+    public static final String EXCEL_REGEX = ".*\\.(xls)";
     private static final int CAMERA_PERMISSION_REQUEST = 2525;
     public static Handler barcodeHandler;
     @BindView(R.id.headerLayout)
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 Drawable selectIcon = IconUtils.getActionBarIcon(MaterialDrawableBuilder
                         .IconValue.SELECT_ALL, Color.WHITE);
                 Drawable deleteIcon = IconUtils.getActionBarIcon(MaterialDrawableBuilder
-                        .IconValue.DELETE, Color.WHITE);
+                        .IconValue.DELETE, Color.RED);
                 menu.getItem(0).setIcon(selectIcon);
                 menu.getItem(1).setIcon(deleteIcon);
 

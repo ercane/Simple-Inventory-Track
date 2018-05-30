@@ -1,21 +1,16 @@
 package com.mree.inc.track;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.mree.inc.track.db.AppDatabase;
 
-public class TrackApp extends Application {
+public class TrackApp extends MultiDexApplication {
     private static Context context;
     private static AppDatabase appDatabase;
+
     public static Context getContext() {
         return context;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        context = getApplicationContext();
     }
 
     public static AppDatabase getDatabase() {
@@ -24,4 +19,11 @@ public class TrackApp extends Application {
 
         return appDatabase;
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context = getApplicationContext();
+    }
+
 }
