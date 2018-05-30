@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         SparseBooleanArray selected = adapter
                                                 .getSelectedIds();
-                                        for (int i = 0; i < adapter.getCount(); i++) {
+                                        for (int i = (selected.size() - 1); i >= 0; i--) {
                                             if (selected.valueAt(i)) {
                                                 Product acc = adapter.getItem
                                                         (selected.keyAt(i));
