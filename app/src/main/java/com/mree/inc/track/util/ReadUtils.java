@@ -59,7 +59,8 @@ public class ReadUtils {
                         product.setProductCode(getStrAsUtf8(tokens[1]));
                         product.setName(getStrAsUtf8(tokens[2]));
                         product.setStock(getStrAsUtf8(tokens[3]));
-                        product.setSource(getStrAsUtf8(tokens[4]));
+                        product.setFee(getStrAsUtf8(tokens[4]));
+                        product.setSource(getStrAsUtf8(tokens[5]));
                         list.add(product);
                     }
                 } catch (IOException e1) {
@@ -242,6 +243,9 @@ public class ReadUtils {
                             product.setStock(getStrAsISO(row[j].getContents()));
                             break;
                         case 4:
+                            product.setFee(getStrAsISO(row[j].getContents()));
+                            break;
+                        case 5:
                             product.setSource(getStrAsISO(row[j].getContents()));
                             break;
                     }

@@ -7,7 +7,7 @@
               android:orientation="vertical"
               android:padding="16dp">
 
-
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/nameLayout"
         android:layout_width="match_parent"
@@ -104,7 +104,32 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
-    <LinearLayout
+        <LinearLayout
+            android:id="@+id/feeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+                <EditText
+                    android:id="@+id/tvFee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/msg_fee"
+                    android:inputType="number"
+                    android:tag="@string/text_bold"
+                    android:textColor="@android:color/black"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
         android:id="@+id/sourceLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -150,7 +175,7 @@
 
     </LinearLayout>
 
-
+    </ScrollView>
 </LinearLayout>
 
 

@@ -7,13 +7,16 @@
     tools:context=".ui.act.MainActivity">
     <LinearLayout android:id="@+id/headerLayout"
                   android:layout_width="match_parent"
-                  android:visibility="gone"
                   android:layout_height="wrap_content"
-                  android:background="@android:color/black" android:orientation="horizontal"
-                  android:paddingBottom="8dp" android:paddingTop="8dp">
+                  android:layout_below="@id/etSearch"
+                  android:background="@android:color/black"
+                  android:orientation="horizontal"
+                  android:paddingBottom="8dp"
+                  android:paddingTop="8dp"
+                  android:visibility="visible">
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1.2"
+                  android:layout_weight="1.1"
                   android:text="@string/header_number"
                   android:textAlignment="center"
                   android:textColor="@android:color/white"/>
@@ -42,6 +45,13 @@
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_weight="1"
+                  android:text="@string/header_fee"
+                  android:textAlignment="center"
+                  android:textColor="@android:color/white"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
                   android:text="@string/header_source"
                   android:textAlignment="center"
                   android:textColor="@android:color/white"/>
@@ -57,7 +67,7 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/etSearch">
+        android:layout_below="@id/headerLayout">
 
     </ListView>
 

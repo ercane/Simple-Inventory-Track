@@ -29,4 +29,6 @@
     <string name="msg_delete">Sil</string>
     <string name="msg_save">Kaydet</string>
     <string name="error_required_field">Bu alan gereklidir!</string>
+    <string name="msg_fee">Fiyat</string>
+    <string name="header_fee">Fiyat</string>
 </resources>

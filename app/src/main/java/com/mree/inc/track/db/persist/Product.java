@@ -12,6 +12,7 @@ public class Product {
     private String productCode;
     private String name;
     private String stock;
+    private String fee;
     private String source;
 
     public long getId() {
@@ -54,6 +55,14 @@ public class Product {
         this.stock = stock;
     }
 
+    public String getFee() {
+        return fee;
+    }
+
+    public void setFee(String fee) {
+        this.fee = fee;
+    }
+
     public String getSource() {
         return source;
     }
@@ -65,8 +74,8 @@ public class Product {
     @Override
     public String toString() {
         try {
-            return id + "\t" + barcode + "\t" + productCode + "\t" + name + "\t" + stock + "\t" +
-                    source;
+            return id + "\t" + barcode + "\t" + productCode + "\t" + name + "\t" + fee + "\t" +
+                    stock + "\t" + source;
         } catch (Exception e) {
             return super.toString();
         }

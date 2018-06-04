@@ -36,6 +36,8 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
     TextView tvStock;
     @BindView(R.id.tvSource)
     TextView tvSource;
+    @BindView(R.id.tvFee)
+    TextView tvFee;
     private SparseBooleanArray mSelectedItemsIds;
     private List<Product> list;
     private List<Product> firstList = new ArrayList<>();
@@ -64,6 +66,7 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
         tvName.setText(item.getName());
         tvProductCode.setText(item.getProductCode());
         tvStock.setText(item.getStock());
+        tvFee.setText(item.getFee());
         tvSource.setText(item.getSource());
 
         if (mSelectedItemsIds.get(position)) {

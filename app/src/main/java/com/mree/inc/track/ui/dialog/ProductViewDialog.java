@@ -41,6 +41,10 @@ public class ProductViewDialog extends BaseDialog {
     Button btnEdit;
     @BindView(R.id.btnDelete)
     Button btnDelete;
+    @BindView(R.id.tvFee)
+    TextView tvFee;
+    @BindView(R.id.feeLayout)
+    LinearLayout feeLayout;
     private Product product;
 
     public ProductViewDialog(Context context, Product product) {
@@ -55,6 +59,7 @@ public class ProductViewDialog extends BaseDialog {
         tvBarcode.setText(product.getBarcode());
         tvProductCode.setText(product.getProductCode());
         tvStock.setText(product.getStock());
+        tvFee.setText(product.getFee());
         tvSource.setText(product.getSource());
 
         btnEdit.setOnClickListener(new View.OnClickListener() {

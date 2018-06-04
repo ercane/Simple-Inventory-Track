@@ -14,7 +14,7 @@ import com.mree.inc.track.db.persist.Product;
 
 @Database(entities = {
         Product.class},
-        version = 8,
+        version = 10,
         exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;

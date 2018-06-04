@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:multidex:1.0.3'
 
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile 'com.obsez.android.lib.filechooser:filechooser:1.1.9'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.jakewharton:butterknife:8.8.1'
@@ -44,9 +45,11 @@ dependencies {
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'net.steamcrafted:materialiconlib:1.1.4'
     implementation 'com.nightonke:boommenu:2.1.1'
+    implementation 'com.google.android.gms:play-services-vision:11.0.2'
+    implementation 'info.androidhive:barcode-reader:1.1.5'
 
     // https://mvnrepository.com/artifact/org.apache.poi/poi
-    compile ('org.apache.poi:poi:3.17') {
+    compile('org.apache.poi:poi:3.17') {
         exclude group: 'stax', module: 'stax-api'
     }
 

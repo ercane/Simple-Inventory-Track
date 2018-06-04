@@ -6,8 +6,8 @@
         android:id="@+id/zxing_barcode_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:zxing_framing_rect_height="216dp"
-        app:zxing_framing_rect_width="216dp"/>
+        app:zxing_framing_rect_height="236dp"
+        app:zxing_framing_rect_width="236dp"/>
 
     <com.journeyapps.barcodescanner.ViewfinderView
         android:id="@+id/zxing_viewfinder_view"

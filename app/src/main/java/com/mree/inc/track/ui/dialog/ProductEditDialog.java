@@ -41,6 +41,10 @@ public class ProductEditDialog extends BaseDialog {
     Button btnSave;
     @BindView(R.id.buttonLayout)
     LinearLayout buttonLayout;
+    @BindView(R.id.tvFee)
+    EditText tvFee;
+    @BindView(R.id.feeLayout)
+    LinearLayout feeLayout;
     private Product product;
 
     public ProductEditDialog(Context context, Product product) {
@@ -61,6 +65,8 @@ public class ProductEditDialog extends BaseDialog {
             tvProductCode.setSelection(product.getProductCode().length());
             tvStock.setText(product.getStock());
             tvStock.setSelection(product.getStock().length());
+            tvFee.setText(product.getFee());
+            tvFee.setSelection(product.getFee().length());
             tvSource.setText(product.getSource());
             tvSource.setSelection(product.getSource().length());
         }
@@ -80,12 +86,14 @@ public class ProductEditDialog extends BaseDialog {
         String barcode = tvBarcode.getText().toString();
         String productCode = tvProductCode.getText().toString();
         String stock = tvStock.getText().toString();
+        String fee = tvFee.getText().toString();
         String source = tvSource.getText().toString();
 
         tvName.setError(null);
         tvBarcode.setError(null);
         tvProductCode.setError(null);
         tvStock.setError(null);
+        tvFee.setError(null);
         tvSource.setError(null);
 
 
@@ -97,6 +105,8 @@ public class ProductEditDialog extends BaseDialog {
             tvProductCode.setError(context.getString(R.string.error_required_field));
         } else if (TextUtils.isEmpty(stock)) {
             tvStock.setError(context.getString(R.string.error_required_field));
+        } else if (TextUtils.isEmpty(fee)) {
+            tvFee.setError(context.getString(R.string.error_required_field));
         } else if (TextUtils.isEmpty(source)) {
             tvSource.setError(context.getString(R.string.error_required_field));
         } else {
@@ -109,6 +119,7 @@ public class ProductEditDialog extends BaseDialog {
             product.setBarcode(barcode);
             product.setProductCode(productCode);
             product.setStock(stock);
+            product.setFee(fee);
             product.setSource(source);
             TrackApp.getDatabase().productDao().addProduct(product);
             dialog.dismiss();
